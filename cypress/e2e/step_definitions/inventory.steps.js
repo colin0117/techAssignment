@@ -1,5 +1,5 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
-import inventoryPage from '../../pages/inventoryPage';
+import inventoryPage from '../../page_objects/inventoryPage';
 
 // Given step definitions
 
@@ -7,7 +7,7 @@ Given('I sort products by {string}', (sortingOption) => {
 	inventoryPage.selectSortingOption(sortingOption);
 });
 
-Given('I have {int} product in my cart', (productCount) => {
+Given('I have {int} products in my cart', (productCount) => {
 	inventoryPage.addNproducts(productCount);
 });
 
@@ -71,7 +71,7 @@ Then('The products are sorted by {string}', (sortingOption) => {
 	});
 });
 
-Then('I see {int} product in my cart', (cartCount) => {
+Then('I see {int} products in my cart', (cartCount) => {
     // If cart is empty, replace the count with an empty string
 	cy.get(inventoryPage.shoppingCartLink).should('have.text', cartCount || '');
 });

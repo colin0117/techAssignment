@@ -1,5 +1,5 @@
 import { When, Then } from '@badeball/cypress-cucumber-preprocessor';
-import inventoryPage from '../../pages/inventoryPage';
+import inventoryPage from '../../page_objects/inventoryPage';
 
 /**
  * These step are available for all feature files

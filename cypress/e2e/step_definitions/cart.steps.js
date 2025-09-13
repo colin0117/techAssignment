@@ -1,5 +1,5 @@
 import { When } from '@badeball/cypress-cucumber-preprocessor';
-import cartPage from '../../pages/cartPage';
+import cartPage from '../../page_objects/cartPage';
 
 // When step definitions
 
@@ -12,7 +12,7 @@ When('I remove the first item from the cart', () => {
 });
 
 When('I click on the Checkout button', () => {
-	cy.get(cartPage.checkoutButton).click();
+	cartPage.clickCheckoutButton()
 });
 
 When('I manipulate the session token in localStorage', () => {

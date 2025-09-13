@@ -2,13 +2,13 @@ Feature: Cart Functionality for slow user
 
   # In a different file due to the Background in cart.feature
 
-  # This does work without any adjustments. If ot fails, the checkout button click
+  # This does work without any adjustments. If it fails, the checkout button click
   # could be given an alternative step definition which extends the timeout for that
   # single operation, i.e. el.click({timeout: 10000})
 
   Background: "performance_glitch_user" is ready to check out
     Given I am logged in as "performance_glitch_user" with password "secret_sauce"
-    And I have 2 product in my cart
+    And I have 2 products in my cart
     And I am on my cart page  
 
   Scenario: Successfully checkout with slow performance user

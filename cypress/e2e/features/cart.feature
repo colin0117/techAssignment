@@ -2,7 +2,7 @@ Feature: Cart Functionality
 
   Background: "standard_user" is ready to check out
     Given I am logged in as "standard_user" with password "secret_sauce"
-    And I have 2 product in my cart
+    And I have 2 products in my cart
     And I am on my cart page
 
   Scenario: Successfully checkout

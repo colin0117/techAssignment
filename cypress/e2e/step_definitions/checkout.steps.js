@@ -1,5 +1,5 @@
 import { When, Then } from '@badeball/cypress-cucumber-preprocessor';
-import checkoutPage from '../../pages/checkoutPage';
+import checkoutPage from '../../page_objects/checkoutPage';
 
 // When step definitions
 

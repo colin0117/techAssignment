@@ -1,20 +1,18 @@
 {
   "name": "saucedemo",
   "version": "1.0.0",
-  "description": "",
   "main": "cypress.config.js",
   "scripts": {
     "cypress:open": "cypress open --e2e --browser=electron",
     "cypress:run": "cypress run",
     "test": "cypress run"
   },
-  "private": true,
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.4",
     "cypress": "^14.5.3"
   },
   "cypress-cucumber-preprocessor": {
-    "stepDefinitions": "cypress/e2e/**/*.js"
+    "stepDefinitions": "cypress/e2e/step_definitions/*.js"
   }
 }

@@ -1,26 +1,26 @@
 const { defineConfig } = require('cypress');
 const createBundler = require('@bahmutov/cypress-esbuild-preprocessor');
-const createEsbuildPlugin = require('@badeball/cypress-cucumber-preprocessor/esbuild').createEsbuildPlugin;
-const addCucumberPreprocessorPlugin = require('@badeball/cypress-cucumber-preprocessor').addCucumberPreprocessorPlugin;
+const preprocessor = require('@badeball/cypress-cucumber-preprocessor');
+const createEsbuildPlugin = require('@badeball/cypress-cucumber-preprocessor/esbuild');
 
 module.exports = defineConfig({
 	e2e: {
-		/***
-		 * Use a specific timeout for command in that specific test rather than globally changing the TMO
-		 */
-		//Increase the default timer to account for the performance user
-		// defaultCommandTimeout: 5000,
-
-		specPattern: '**/*.feature',
+		specPattern: 'cypress/e2e/features/**/*.feature',
 		setupNodeEvents(on, config) {
-			addCucumberPreprocessorPlugin(on, config);
-			on('file:preprocessor', createBundler({ plugins: [createEsbuildPlugin(config)] }));
+			// This is required for the preprocessor to be able to generate JSON reports after each run, and more,
+
+			on(
+				'file:preprocessor',
+				createBundler({
+					plugins: [createEsbuildPlugin.default(config)]
+				})
+			);
+
+			preprocessor.addCucumberPreprocessorPlugin(on, config);
+
 			return config;
 		},
 
-		// Location of the feature files
-		specPattern: 'cypress/e2e/**/*.feature',
-		
 		// Base URL. Would be better to use an env variable - see README
 		baseUrl: 'https://www.saucedemo.com'
 	}

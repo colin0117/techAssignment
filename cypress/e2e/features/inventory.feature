@@ -18,9 +18,9 @@ Feature: Inventory Functionality
 
   Scenario: User can add and remove <Count> products from cart
     When I add <Count> product to my cart
-    Then I see <Count> product in my cart
+    Then I see <Count> products in my cart
     Then I can remove <Count> product from my cart
-    Then I see 0 product in my cart
+    Then I see 0 products in my cart
     Examples:
       | Count |
       | 1     |
