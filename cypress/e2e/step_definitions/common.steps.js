@@ -1,5 +1,4 @@
 import { When, Then } from '@badeball/cypress-cucumber-preprocessor';
-import inventoryPage from '../../page_objects/inventoryPage';
 
 /**
  * These step are available for all feature files
@@ -23,8 +22,4 @@ When('I manipulate the session token in localStorage', () => {
 	});
 });
 
-// Then step definitions
 
-Then('I see the homepage', () => {
-	inventoryPage.assertPageReady();
-});

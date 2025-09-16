@@ -23,6 +23,10 @@ When('I can remove {int} product from my cart', (productCount) => {
 
 // Then step definitions
 
+Then('I see the inventory page', () => {
+	InventoryPage.assertPageReady();
+});
+
 Then('All products are loaded correctly', () => {
 	// Assuming 6 products for this demo site. In a real app,
 	// this might come from an API call or an SQL statement

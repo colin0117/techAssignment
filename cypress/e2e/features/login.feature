@@ -7,7 +7,7 @@ Feature: Login Functionality
     When I enter username "standard_user"
     And I enter password "secret_sauce"
     And I click the login button
-    Then I see the homepage
+    Then I see the inventory page
 
   Scenario Outline: Login failure test for <Comment>
     When I enter username "<User>"
@@ -19,8 +19,8 @@ Feature: Login Functionality
       | Locked user                 | locked_out_user | secret_sauce        | Epic sadface: Sorry, this user has been locked out                        |
       | Unknown user                | unknown_user    | secret_sauce        | Epic sadface: Username and password do not match any user in this service |
       | Bad password                | standard_user   | secret_sauce1       | Epic sadface: Username and password do not match any user in this service |
-      | Username Missing            | standard_user   |                     | Epic sadface: Password is required                                        |
-      | Password Missing            |                 | secret_sauce1       | Epic sadface: Username is required                                        |
+      | Username Missing            |                 | secret_sauce1       | Epic sadface: Username is required                                        |
+      | Password Missing            | standard_user   |                     | Epic sadface: Password is required                                        |
       | White space before          | standard_user   | [SPACE]secret_sauce | Epic sadface: Username and password do not match any user in this service |
       | White space after           | standard_user   | secret_sauce[SPACE] | Epic sadface: Username and password do not match any user in this service |
       | White space in middle       | standard_user   | secret_[SPACE]sauce | Epic sadface: Username and password do not match any user in this service |
