@@ -1,5 +1,5 @@
 import LoginPage from '../../page_objects/loginPage';
-import inventoryPage from '../../page_objects/inventoryPage';
+import InventoryPage from '../../page_objects/inventoryPage';
 
 import { processString } from '../../support/utils';
 
@@ -12,7 +12,7 @@ describe('Login Functionality', () => {
 		LoginPage.enterUsername(processString('standard_user'));
 		LoginPage.enterPassword(processString('secret_sauce'));
 		LoginPage.clickSubmit();
-		inventoryPage.assertPageReady();
+		InventoryPage.assertPageReady();
 	});
 
 	const errorTestCases = [
