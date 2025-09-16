@@ -1,22 +1,32 @@
-class loginPage {
-	// Private selectors
+class LoginPage {
+	/***
+	 * Private selectors
+	 */
 	_userNameInput = '[data-test="username"]';
 	_passwordInput = '[data-test="password"]';
 	_submitButton = '[data-test="login-button"]';
 	_errorBox = '[data-test="error"]';
 
-	// Public methods
+	/***
+	 * Public methods
+	 */
+
+	// Actions
 	visit() {
 		cy.visit('');
-		this.isReady();
+		this.assertPageReady();
 	}
 
 	enterUsername(username) {
-		cy.get(this._userNameInput).type(username);
+		if (username) {
+			cy.get(this._userNameInput).type(username);
+		}
 	}
 
 	enterPassword(password) {
-		cy.get(this._passwordInput).type(password);
+		if (password) {
+			cy.get(this._passwordInput).type(password);
+		}
 	}
 
 	clickSubmit() {
@@ -24,13 +34,13 @@ class loginPage {
 	}
 
 	// Assertions
-	isReady() {
+	assertPageReady() {
 		cy.get(this._userNameInput).should('be.visible');
 	}
 
-	assertError(errorText) {
+	assertError(errorMessage) {
 		cy.get(this._errorBox).should('be.visible').and('contain.text', errorMessage);
 	}
 }
 
-export default new loginPage();
+export default new LoginPage();

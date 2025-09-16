@@ -1,45 +1,40 @@
-// class cartPage {
-// 	/***
-// 	 * Selectors
-// 	 */
-// 	_checkoutButton = '[data-test="checkout"]';
-// 	_inventoryItems = '[data-test="inventory-item"]';
-
-// 	elements = {
-// 		removeButton: () => cy.contains('button', 'Remove')
-// 	};
-// }
-
-// export default new cartPage();
-
-/***
- * cart.html - page for checkout
- */
-
 class CartPage {
-  // Private selectors
-  _checkoutButton = '[data-test="checkout"]';
-  _inventoryItems = '[data-test="inventory-item"]';
-  _removeButton = 'button:contains("Remove")';
+	/***
+	 * Private selectors
+	 */
+	_inventoryItems = '[data-test="inventory-item"]';
+	_removeButton = 'button:contains("Remove")';
 
-  // Public methods (actions/assertions)
-  clickCheckoutButton() {
-    cy.get(this._checkoutButton).click();
-  }
+	_checkoutButton = '[data-test="checkout"]';
+	_continueShoppingButton = '[data-test="continue-shopping"]';
 
-  removeItem(itemName) {
-    cy.contains(this._inventoryItems, itemName)
-      .find(this_removeButton)
-      .click();
-  }
+	/***
+	 * Public methods
+	 */
 
-  getCartItems() {
-    return cy.get(this._inventoryItems);
-  }
+	// Actions
 
-  assertCartItemCount(expectedCount) {
-    this.getCartItems().should('have.length', expectedCount);
-  }
+	clickCheckoutButton() {
+		cy.get(this._checkoutButton).click();
+	}
+
+	clickContinueShoppingButton() {
+		cy.get(this._continueShoppingButton).click();
+	}
+
+	removeItem(itemNumber) {
+		cy.get(this._removeButton).eq(itemNumber).click();
+	}
+
+	getCartItems() {
+		return cy.get(this._inventoryItems);
+	}
+
+	// Assertions
+
+	assertCartItemCount(expectedCount) {
+		this.getCartItems().should('have.length', expectedCount);
+	}
 }
 
 export default new CartPage();

@@ -1,40 +1,36 @@
 import { When, Then } from '@badeball/cypress-cucumber-preprocessor';
-import checkoutPage from '../../page_objects/checkoutPage';
+import InventoryPage from '../../page_objects/inventoryPage';
+import CartPage from '../../page_objects/cartPage';
+import CheckoutPage from '../../page_objects/checkoutPage';
 
 // When step definitions
 
+// High-level navigation step
+When('I am on my checkout page', () => {
+    InventoryPage.clickShoppingCart();
+    CartPage.clickCheckoutButton();
+});
+
 When('I click on the Continue button', () => {
-	cy.get(checkoutPage.continueButton).click();
+  CheckoutPage.clickContinueButton();
 });
 
 When("I fill in the checkout form with the following details:", (dataTable) => {
-    const checkoutData = dataTable.hashes()[0];
-
-    if (checkoutData.firstname) {
-        cy.get(checkoutPage.firstNameInput).type(checkoutData.firstname);
-    }
-    if (checkoutData.lastname) {
-        cy.get(checkoutPage.lastNameInput).type(checkoutData.lastname);
-    }
-    if (checkoutData.zipCode) {
-        cy.get(checkoutPage.zipInput).type(checkoutData.zipCode);
-    }
+  // dataTable.hashes() returns an array of objects, we only pass one
+  const checkoutData = dataTable.hashes()[0];
+  CheckoutPage.fillCheckoutForm(checkoutData);
 });
 
 When('I click on the Finish button', () => {
-	cy.get(checkoutPage.finishButton).click();
-});
-
-When('I see the order was successful', () => {
-	cy.get(checkoutPage.thankYouText)
-		.should('be.visible')
-		.and('contain.text', 'Thank you for your order!');
+  CheckoutPage.clickFinishButton();
 });
 
 // Then step definitions
 
-Then('I see the error {string}', (text) => {
-	cy.get(checkoutPage.errorText).should('be.visible').and('have.text', text);
+Then('I see the order was successful', () => {
+  CheckoutPage.assertOrderSuccessful();
 });
 
-
+Then('I see the error {string}', (errorMessage) => {
+  CheckoutPage.assertError(errorMessage);
+});

@@ -15,17 +15,18 @@ Feature: Login Functionality
     And I click the login button
     Then I see a login error with "<Error>"
     Examples:
-      | Comment      | User            | Password      | Error                                                                     |
-      | Locked user  | locked_out_user | secret_sauce  | Epic sadface: Sorry, this user has been locked out                        |
-      | Unknown user | unknown_user    | secret_sauce  | Epic sadface: Username and password do not match any user in this service |
-      | Bad password | standard_user   | secret_sauce1 | Epic sadface: Username and password do not match any user in this service |
-
-# Additional tests
-
-# validate missing username
-# validate missing password
-# various tests based around white space before/in/after name and password
-# various tests based around capitalisation in name and password
-# try passwords with special characters
-# as an input element, try SQL injection strings for both user and password
-# can login as one user, and then logout and login as a different user
+      | Comment                     | User            | Password            | Error                                                                     |
+      | Locked user                 | locked_out_user | secret_sauce        | Epic sadface: Sorry, this user has been locked out                        |
+      | Unknown user                | unknown_user    | secret_sauce        | Epic sadface: Username and password do not match any user in this service |
+      | Bad password                | standard_user   | secret_sauce1       | Epic sadface: Username and password do not match any user in this service |
+      | Username Missing            | standard_user   |                     | Epic sadface: Password is required                                        |
+      | Password Missing            |                 | secret_sauce1       | Epic sadface: Username is required                                        |
+      | White space before          | standard_user   | [SPACE]secret_sauce | Epic sadface: Username and password do not match any user in this service |
+      | White space after           | standard_user   | secret_sauce[SPACE] | Epic sadface: Username and password do not match any user in this service |
+      | White space in middle       | standard_user   | secret_[SPACE]sauce | Epic sadface: Username and password do not match any user in this service |
+      | Username capitalisation     | Standard_user   | secret_sauce        | Epic sadface: Username and password do not match any user in this service |
+      | Password capitalisation     | standard_user   | Secret_sauce        | Epic sadface: Username and password do not match any user in this service |
+      | Username special characters | standard_user&  | Secret_sauce        | Epic sadface: Username and password do not match any user in this service |
+      | Password special characters | standard_user   | Secret_sauce&       | Epic sadface: Username and password do not match any user in this service |
+      | Username SQL injection      | ' OR '1'='1     | Secret_sauce        | Epic sadface: Username and password do not match any user in this service |
+      | Password SQL injection      | standard_user   | ' OR '1'='1         | Epic sadface: Username and password do not match any user in this service |

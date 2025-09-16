@@ -1,10 +1,10 @@
-import loginPage from '../pages/loginPage';
-import inventoryPage from '../pages/inventoryPage';
+import LoginPage from '../page_objects/loginPage';
+import InventoryPage from '../page_objects/inventoryPage';
 
 Cypress.Commands.add('login', (username, password) => {
-    loginPage.visit();
-    loginPage.enterUsername(username);
-    loginPage.enterPassword(password);
-    loginPage.clickSubmit();
-    cy.get(inventoryPage.shoppingCartLink).should('be.visible');
+	LoginPage.visit();
+	LoginPage.enterUsername(username);
+	LoginPage.enterPassword(password);
+	LoginPage.clickSubmit();
+	InventoryPage.assertPageReady();
 });

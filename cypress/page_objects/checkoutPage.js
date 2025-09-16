@@ -1,23 +1,65 @@
-class checkoutPage {
+class CheckoutPage {
 	/***
-	 * Selectors
+	 * Private selectors
 	 */
 
 	// Page One
-	firstNameInput = '[data-test="firstName"]';
-	lastNameInput = '[data-test="lastName"]';
-	zipInput = '[data-test="postalCode"]';
+	_firstNameInput = '[data-test="firstName"]';
+	_lastNameInput = '[data-test="lastName"]';
+	_zipInput = '[data-test="postalCode"]';
 
-	errorText = '[data-test="error"]';
+	_errorText = '[data-test="error"]';
 
-	cancelButton = '[data-test="cancel"]';
-	continueButton = '[data-test="continue"]';
+	_cancelButton = '[data-test="cancel"]';
+	_continueButton = '[data-test="continue"]';
 
 	// Page two
-	finishButton = '[data-test="finish"]';
+	_finishButton = '[data-test="finish"]';
 
 	// Complete
-	thankYouText = '[data-test="complete-header"]';
+	_thankYouText = '[data-test="complete-header"]';
+
+	/***
+	 * Public methods
+	 */
+
+	// Actions
+
+	fillCheckoutForm(details) {
+		if (details.firstname) {
+			cy.get(this._firstNameInput).type(details.firstname);
+		}
+		if (details.lastname) {
+			cy.get(this._lastNameInput).type(details.lastname);
+		}
+		if (details.zipCode) {
+			cy.get(this._zipInput).type(details.zipCode);
+		}
+	}
+
+	clickContinueButton() {
+		cy.get(this._continueButton).click();
+	}
+
+	clickFinishButton() {
+		cy.get(this._finishButton).click();
+	}
+
+	clickCancelButton() {
+		cy.get(this._cancelButton).click();
+	}
+
+	// Assertions
+
+	assertOrderSuccessful() {
+		cy.get(this._thankYouText)
+			.should('be.visible')
+			.and('contain.text', 'Thank you for your order!');
+	}
+
+	assertError(errorMessage) {
+		cy.get(this._errorText).should('be.visible').and('have.text', errorMessage);
+	}
 }
 
-export default new checkoutPage();
+export default new CheckoutPage();

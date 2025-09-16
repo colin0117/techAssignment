@@ -15,8 +15,16 @@ When('I clear the local storage', () => {
 	cy.clearLocalStorage();
 });
 
+When('I manipulate the session token in localStorage', () => {
+	const storageName = 'session-username';
+	cy.window().then((window) => {
+		const originalValue = window.localStorage.getItem(storageName);
+		window.localStorage.setItem(storageName, `${originalValue}XXX`);
+	});
+});
+
 // Then step definitions
 
 Then('I see the homepage', () => {
-	inventoryPage.isReady();
+	inventoryPage.assertPageReady();
 });

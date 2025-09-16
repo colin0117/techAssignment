@@ -16,7 +16,7 @@ Feature: Inventory Functionality
       | Price ascending  | Price (low to high) |
       | Price descending | Price (high to low) |
 
-  Scenario: User can add and remove <Count> products from cart
+  Scenario Outline: User can add and remove <Count> products from cart
     When I add <Count> product to my cart
     Then I see <Count> products in my cart
     Then I can remove <Count> product from my cart
@@ -27,7 +27,7 @@ Feature: Inventory Functionality
       | 2     |
       | 3     |
 
-# Additional tests
+# # Additional tests
 
-# Confirm can only add item once
-# Add and remove products individually, ensuring counts goes up and down as expected
+# # Confirm can only add item once
+# # Add and remove products individually, ensuring counts goes up and down as expected

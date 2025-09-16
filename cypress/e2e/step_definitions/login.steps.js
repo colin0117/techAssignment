@@ -1,11 +1,11 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
-
-import loginPage from '../../page_objects/loginPage';
+import LoginPage from '../../page_objects/loginPage';
+import { processString } from '../../support/utils';
 
 // Given step definitions
 
 Given('I am at the login page', () => {
-	loginPage.visit();
+	LoginPage.visit();
 });
 
 Given('I am logged in as {string} with password {string}', (username, password) => {
@@ -15,27 +15,29 @@ Given('I am logged in as {string} with password {string}', (username, password) 
 // When step definitions
 
 When('I open the login page', () => {
-	loginPage.visit();
+	LoginPage.visit();
 });
 
 When('I see the login page', () => {
-	loginPage.isReady();
+	LoginPage.assertPageReady();
 });
 
 When('I enter username {string}', (username) => {
-	loginPage.enterUsername(username);
+	const processed = processString(username);
+	LoginPage.enterUsername(processed);
 });
 
 When('I enter password {string}', (password) => {
-	loginPage.enterPassword(password);
+	const processed = processString(password);
+	LoginPage.enterPassword(processed);
 });
 
 When('I click the login button', () => {
-	loginPage.clickSubmit();
+	LoginPage.clickSubmit();
 });
 
 // Then step definitions
 
 Then('I see a login error with {string}', (errorMessage) => {
-	cy.get(loginPage.errorBox).should('be.visible').and('contain.text', errorMessage);
+	LoginPage.assertError(errorMessage);
 });
