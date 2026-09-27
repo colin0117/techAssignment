@@ -18,6 +18,56 @@ class InventoryPage {
 	_sortDropdown = '[data-test="product-sort-container"]';
 
 	/***
+	 * Element Getters
+	 */
+	get sortDropdown() {
+		return cy.get(this._sortDropdown);
+	}
+
+	get shoppingCartLink() {
+		return cy.get(this._shoppingCartLink);
+	}
+
+	get shoppingCartBadge() {
+		return cy.get(this._shoppingCartBadge);
+	}
+
+	get inventoryItems() {
+		return cy.get(this._inventoryItem);
+	}
+
+	get inventoryItemNames() {
+		return cy.get(this._inventoryItemName);
+	}
+
+	get inventoryItemPrices() {
+		return cy.get(this._inventoryItemPrice);
+	}
+
+	get addToCartButtons() {
+		return cy.get(this._inventoryItemAddToCartButton);
+	}
+
+	get removeButtons() {
+		return cy.get(this._inventoryItemRemoveButton);
+	}
+
+	/***
+	 * Parameterized Element Functions
+	 */
+	getItemByName(productName) {
+		return this.inventoryItems.filter(`:contains("${productName}")`);
+	}
+
+	getItemAddToCartButton(productName) {
+		return this.getItemByName(productName).find(this._inventoryItemAddToCartButton);
+	}
+
+	getItemRemoveButton(productName) {
+		return this.getItemByName(productName).find(this._inventoryItemRemoveButton);
+	}
+
+	/***
 	 * Public methods
 	 */
 
@@ -25,34 +75,54 @@ class InventoryPage {
 
 	// Change the sorting option
 	selectSortingOption(sortingOption) {
-		cy.get(this._sortDropdown).select(sortingOption);
+		this.sortDropdown.select(sortingOption);
 	}
 
 	addNproducts(productCount) {
 		for (let i = 0; i < productCount; i++) {
-			cy.get(this._inventoryItemAddToCartButton).first().click();
+			this.addToCartButtons.first().click();
 		}
 	}
 
 	removeNproducts(productCount) {
 		for (let i = 0; i < productCount; i++) {
-			cy.get(this._inventoryItemRemoveButton).last().click();
+			this.removeButtons.last().click();
 		}
 	}
 
 	clickShoppingCart() {
-		cy.get(this._shoppingCartLink).click();
+		this.shoppingCartLink.click();
+	}
+
+	clickProductByName(productName) {
+		this.inventoryItemNames.contains(productName).click();
+	}
+
+	addProductByName(productName) {
+		this.getItemAddToCartButton(productName).click();
+	}
+
+	removeProductByName(productName) {
+		this.getItemRemoveButton(productName).click();
 	}
 
 	// Assertions
 
+	assertItemHasRemoveButton(productName) {
+		this.getItemRemoveButton(productName).should('be.visible');
+	}
+
+	assertItemHasNoAddToCartButton(productName) {
+		this.getItemAddToCartButton(productName).should('not.exist');
+	}
+
 	assertPageReady() {
 		cy.url().should('include', this.url);
-		cy.get(this._shoppingCartLink).should('be.visible');
+		this.shoppingCartLink.should('be.visible');
 	}
 
 	assertAllProductsLoaded(expectedProductCount) {
-		cy.get(this._inventoryItem)
+		this.inventoryItems
 			.should('have.length', expectedProductCount)
 			.each(($product) => {
 				cy.wrap($product).within(() => {
@@ -89,9 +159,9 @@ class InventoryPage {
 
 	assertCartBadgeCount(expectedCount) {
 		if (expectedCount === 0) {
-			cy.get(this._shoppingCartBadge).should('not.exist');
+			this.shoppingCartBadge.should('not.exist');
 		} else {
-			cy.get(this._shoppingCartBadge).should('have.text', expectedCount.toString());
+			this.shoppingCartBadge.should('have.text', expectedCount.toString());
 		}
 	}
 
@@ -101,15 +171,13 @@ class InventoryPage {
 
 	// Get an array of the names
 	_getAllNames() {
-		return cy
-			.get(this._inventoryItemName)
+		return this.inventoryItemNames
 			.then(($els) => $els.toArray().map((el) => el.innerText));
 	}
 
 	// Get an array of the prices (stripping currency to make them floats)
 	_getAllPrices() {
-		return cy
-			.get(this._inventoryItemPrice)
+		return this.inventoryItemPrices
 			.then(($els) => $els.toArray().map((el) => parseFloat(el.innerText.replace('$', ''))));
 	}
 }

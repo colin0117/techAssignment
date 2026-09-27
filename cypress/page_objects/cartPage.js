@@ -4,9 +4,38 @@ class CartPage {
 	 */
 	_inventoryItems = '[data-test="inventory-item"]';
 	_removeButton = 'button:contains("Remove")';
-
 	_checkoutButton = '[data-test="checkout"]';
 	_continueShoppingButton = '[data-test="continue-shopping"]';
+
+	/***
+	 * Element Getters
+	 */
+	get checkoutButton() {
+		return cy.get(this._checkoutButton);
+	}
+
+	get continueShoppingButton() {
+		return cy.get(this._continueShoppingButton);
+	}
+
+	get inventoryItems() {
+		return cy.get(this._inventoryItems);
+	}
+
+	get removeButtons() {
+		return cy.get(this._removeButton);
+	}
+
+	/***
+	 * Parameterized Element Functions
+	 */
+	getRemoveButton(itemNumber) {
+		return this.removeButtons.eq(itemNumber);
+	}
+
+	getCartItems() {
+		return this.inventoryItems;
+	}
 
 	/***
 	 * Public methods
@@ -15,25 +44,21 @@ class CartPage {
 	// Actions
 
 	clickCheckoutButton() {
-		cy.get(this._checkoutButton).click();
+		this.checkoutButton.click();
 	}
 
 	clickContinueShoppingButton() {
-		cy.get(this._continueShoppingButton).click();
+		this.continueShoppingButton.click();
 	}
 
 	removeItem(itemNumber) {
-		cy.get(this._removeButton).eq(itemNumber).click();
-	}
-
-	getCartItems() {
-		return cy.get(this._inventoryItems);
+		this.getRemoveButton(itemNumber).click();
 	}
 
 	// Assertions
 
 	assertCartItemCount(expectedCount) {
-		this.getCartItems().should('have.length', expectedCount);
+		this.inventoryItems.should('have.length', expectedCount);
 	}
 }
 

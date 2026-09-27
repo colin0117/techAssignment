@@ -17,8 +17,16 @@ When('I add {int} product to my cart', (productCount) => {
 	InventoryPage.addNproducts(productCount);
 });
 
+When('I add the product {string} to my cart', (productName) => {
+	InventoryPage.addProductByName(productName);
+});
+
 When('I can remove {int} product from my cart', (productCount) => {
 	InventoryPage.removeNproducts(productCount);
+});
+
+When('I remove the product {string} from my cart', (productName) => {
+	InventoryPage.removeProductByName(productName);
 });
 
 // Then step definitions
@@ -41,3 +49,12 @@ Then('The products are sorted by {string}', (sortingOption) => {
 Then('I see {int} products in my cart', (cartCount) => {
 	InventoryPage.assertCartBadgeCount(cartCount);
 });
+
+Then('The product {string} shows a remove button', (productName) => {
+	InventoryPage.assertItemHasRemoveButton(productName);
+});
+
+Then('The product {string} does not show an add to cart button', (productName) => {
+	InventoryPage.assertItemHasNoAddToCartButton(productName);
+});
+

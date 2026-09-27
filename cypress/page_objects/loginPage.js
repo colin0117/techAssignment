@@ -8,6 +8,25 @@ class LoginPage {
 	_errorBox = '[data-test="error"]';
 
 	/***
+	 * Element Getters
+	 */
+	get userNameInput() {
+		return cy.get(this._userNameInput);
+	}
+
+	get passwordInput() {
+		return cy.get(this._passwordInput);
+	}
+
+	get submitButton() {
+		return cy.get(this._submitButton);
+	}
+
+	get errorBox() {
+		return cy.get(this._errorBox);
+	}
+
+	/***
 	 * Public methods
 	 */
 
@@ -19,27 +38,27 @@ class LoginPage {
 
 	enterUsername(username) {
 		if (username) {
-			cy.get(this._userNameInput).type(username);
+			this.userNameInput.type(username);
 		}
 	}
 
 	enterPassword(password) {
 		if (password) {
-			cy.get(this._passwordInput).type(password);
+			this.passwordInput.type(password);
 		}
 	}
 
 	clickSubmit() {
-		cy.get(this._submitButton).click();
+		this.submitButton.click();
 	}
 
 	// Assertions
 	assertPageReady() {
-		cy.get(this._userNameInput).should('be.visible');
+		this.userNameInput.should('be.visible');
 	}
 
 	assertError(errorMessage) {
-		cy.get(this._errorBox).should('be.visible').and('contain.text', errorMessage);
+		this.errorBox.should('be.visible').and('contain.text', errorMessage);
 	}
 }
 

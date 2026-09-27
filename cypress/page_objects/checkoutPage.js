@@ -7,17 +7,50 @@ class CheckoutPage {
 	_firstNameInput = '[data-test="firstName"]';
 	_lastNameInput = '[data-test="lastName"]';
 	_zipInput = '[data-test="postalCode"]';
-
 	_errorText = '[data-test="error"]';
-
 	_cancelButton = '[data-test="cancel"]';
 	_continueButton = '[data-test="continue"]';
 
-	// Page two
+	// Page Two
 	_finishButton = '[data-test="finish"]';
 
 	// Complete
 	_thankYouText = '[data-test="complete-header"]';
+
+	/***
+	 * Element Getters
+	 */
+	get firstNameInput() {
+		return cy.get(this._firstNameInput);
+	}
+
+	get lastNameInput() {
+		return cy.get(this._lastNameInput);
+	}
+
+	get zipInput() {
+		return cy.get(this._zipInput);
+	}
+
+	get errorText() {
+		return cy.get(this._errorText);
+	}
+
+	get cancelButton() {
+		return cy.get(this._cancelButton);
+	}
+
+	get continueButton() {
+		return cy.get(this._continueButton);
+	}
+
+	get finishButton() {
+		return cy.get(this._finishButton);
+	}
+
+	get thankYouText() {
+		return cy.get(this._thankYouText);
+	}
 
 	/***
 	 * Public methods
@@ -27,38 +60,38 @@ class CheckoutPage {
 
 	fillCheckoutForm(details) {
 		if (details.firstname) {
-			cy.get(this._firstNameInput).type(details.firstname);
+			this.firstNameInput.type(details.firstname);
 		}
 		if (details.lastname) {
-			cy.get(this._lastNameInput).type(details.lastname);
+			this.lastNameInput.type(details.lastname);
 		}
 		if (details.zipCode) {
-			cy.get(this._zipInput).type(details.zipCode);
+			this.zipInput.type(details.zipCode);
 		}
 	}
 
 	clickContinueButton() {
-		cy.get(this._continueButton).click();
+		this.continueButton.click();
 	}
 
 	clickFinishButton() {
-		cy.get(this._finishButton).click();
+		this.finishButton.click();
 	}
 
 	clickCancelButton() {
-		cy.get(this._cancelButton).click();
+		this.cancelButton.click();
 	}
 
 	// Assertions
 
 	assertOrderSuccessful() {
-		cy.get(this._thankYouText)
+		this.thankYouText
 			.should('be.visible')
 			.and('contain.text', 'Thank you for your order!');
 	}
 
 	assertError(errorMessage) {
-		cy.get(this._errorText).should('be.visible').and('have.text', errorMessage);
+		this.errorText.should('be.visible').and('have.text', errorMessage);
 	}
 }
 
